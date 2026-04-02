@@ -19,7 +19,10 @@ app.post('/webhook', async (req, reply) => {
 
   if (body.Type === 'SubscriptionConfirmation' && body.SubscribeURL) {
     try {
-      console.log('Confirming subscription... URL:', body.SubscribeURL)
+      console.log(
+        `[INSTANCE ${process.env.HOSTNAME}] Confirming subscription... URL:`,
+        body.SubscribeURL,
+      )
 
       const response = await fetch(body.SubscribeURL, {
         method: 'GET',
@@ -27,9 +30,14 @@ app.post('/webhook', async (req, reply) => {
 
       const data = await response.text()
 
-      console.log(data)
+      console.log(
+        `[INSTANCE ${process.env.HOSTNAME}] Subscription confirmation data:`,
+        data,
+      )
 
-      console.log('Subscription confirmation received')
+      console.log(
+        `[INSTANCE ${process.env.HOSTNAME}] Subscription confirmation received`,
+      )
 
       return reply.status(200).send({
         ok: 'true',
@@ -44,7 +52,10 @@ app.post('/webhook', async (req, reply) => {
   if (body.Type === 'Notification') {
     const message = JSON.parse(body.Message)
 
-    console.log(message)
+    console.log(
+      `[INSTANCE ${process.env.HOSTNAME}] Notification received:`,
+      message,
+    )
 
     const { orderId, userId, status } = message
 
@@ -111,6 +122,8 @@ app.listen(
     port: PORT,
   },
   () => {
-    console.log(`Server is running on port ${PORT}`)
+    console.log(
+      `[INSTANCE ${process.env.HOSTNAME}] Server is running on port ${PORT}`,
+    )
   },
 )
