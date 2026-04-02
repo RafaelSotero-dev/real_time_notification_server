@@ -51,7 +51,9 @@ app.post('/webhook', async (req, reply) => {
     const userConnections = clients.get(String(userId)) || []
 
     userConnections.forEach((connection) => {
-      connection.write(`data: ${JSON.stringify({ orderId, status })}\n\n`)
+      connection.write(
+        `data: ${JSON.stringify({ orderId, status, instance: process.env.HOSTNAME })}\n\n`,
+      )
     })
 
     return reply.status(200).send({
@@ -72,6 +74,7 @@ const headBeat = (userId) => {
 }
 
 app.get('/events/:userId', (request, reply) => {
+  console.log(`[INSTANCE ${process.env.HOSTNAME}] client connected`)
   const { userId } = request.params
 
   reply.raw.writeHead(200, {
@@ -92,6 +95,9 @@ app.get('/events/:userId', (request, reply) => {
   request.raw.on('close', () => {
     const connection = clients.get(userId)
     if (connection) {
+      console.log(
+        `[INSTANCE ${process.env.HOSTNAME}] client: ${userId} disconnected`,
+      )
       connection.delete(reply.raw)
       if (connection.size === 0) {
         clients.delete(userId)
