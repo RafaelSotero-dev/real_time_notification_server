@@ -3,7 +3,7 @@ module.exports = {
     {
       name: 'real-time-notification',
       script: 'npm',
-      args: 'start',
+      args: 'run start',
       out_file: '/var/log/realtime/out.log',
       error_file: '/var/log/realtime/out.log',
       log_date_format: 'YYYY-MM-DD HH:mm:ss',

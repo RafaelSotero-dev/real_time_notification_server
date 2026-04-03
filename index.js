@@ -15,7 +15,11 @@ app.register(cors, {
 const clients = new Map()
 
 app.get('/health', (_request, reply) => {
-  return reply.status(200).send({ status: 'ok' })
+  console.log('health endpoint called')
+  return reply.status(200).send({
+    instance: process.env.HOSTNAME,
+    status: 'ok',
+  })
 })
 
 app.post('/webhook', async (req, reply) => {
