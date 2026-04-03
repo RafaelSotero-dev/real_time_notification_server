@@ -128,6 +128,7 @@ app.get('/events/:userId', (request, reply) => {
 app.listen(
   {
     port: PORT,
+    host: '0.0.0.0',
   },
   () => {
     console.log(
