@@ -6,7 +6,7 @@ module.exports = {
       interpreter: 'node',
       args: 'run start',
       out_file: '/var/log/realtime/out.log',
-      error_file: '/var/log/realtime/out.log',
+      error_file: '/var/log/realtime/error.log',
       log_date_format: 'YYYY-MM-DD HH:mm:ss',
       time: true,
       env: {
