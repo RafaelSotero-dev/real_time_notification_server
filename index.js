@@ -4,7 +4,7 @@ import cors from '@fastify/cors'
 const app = fastify()
 
 const PORT = process.env.PORT || 3000
-const FRONTENDURL = process.env.FRONTENDURL || 'http://localhost:5173'
+const FRONTENDURL = process.env.FRONTENDURL || 'http://localhost:5500'
 const origin = FRONTENDURL
 
 app.register(cors, {
@@ -13,6 +13,8 @@ app.register(cors, {
 })
 
 const clients = new Map()
+
+console.log(origin)
 
 app.get('/health', (_request, reply) => {
   console.log('health endpoint called')
