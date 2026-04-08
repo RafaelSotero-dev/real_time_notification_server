@@ -10,10 +10,24 @@ const PORT = process.env.PORT || 3000
 const FRONTENDURL = process.env.FRONTENDURL || 'http://localhost:5500'
 const origin = FRONTENDURL
 
-app.register(cors, {
-  origin: '*',
-  methods: ['GET', 'POST'],
-})
+const start = async () => {
+  await app.register(cors, {
+    origin: true,
+    methods: ['GET', 'POST', 'OPTIONS'],
+  })
+
+  await app.listen(
+    {
+      port: PORT,
+      host: '0.0.0.0',
+    },
+    () => {
+      console.log(
+        `[INSTANCE ${process.env.HOSTNAME}] Server is running on port ${PORT}`,
+      )
+    },
+  )
+}
 
 const clients = new Map()
 
@@ -97,15 +111,6 @@ const headBeat = (userId) => {
   }
 }
 
-app.options('/events/:userId', (_req, reply) => {
-  reply
-    .header('Access-Control-Allow-Origin', '*')
-    .header('Access-Control-Allow-Methods', 'GET, OPTIONS')
-    .header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-    .status(204)
-    .send()
-})
-
 app.get('/events/:userId', (request, reply) => {
   console.log(`[INSTANCE ${process.env.HOSTNAME}] client connected`)
   const { userId } = request.params
@@ -141,14 +146,4 @@ app.get('/events/:userId', (request, reply) => {
   })
 })
 
-app.listen(
-  {
-    port: PORT,
-    host: '0.0.0.0',
-  },
-  () => {
-    console.log(
-      `[INSTANCE ${process.env.HOSTNAME}] Server is running on port ${PORT}`,
-    )
-  },
-)
+start()
