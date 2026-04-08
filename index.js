@@ -11,7 +11,7 @@ const FRONTENDURL = process.env.FRONTENDURL || 'http://localhost:5500'
 const origin = FRONTENDURL
 
 app.register(cors, {
-  origin: [origin],
+  origin: '*',
   methods: ['GET', 'POST'],
 })
 
