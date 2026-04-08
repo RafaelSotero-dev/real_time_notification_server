@@ -3,7 +3,6 @@ import { clients } from "./index.js";
 
 const sqsClient = new SQSClient({
     region: process.env.AWS_REGION || 'us-east-1',
-    endpoint: process.env.ENDPOINT ?? "http://host.docker.internal:4566",
     credentials: {
         accessKeyId: "test",
         secretAccessKey: "test"
