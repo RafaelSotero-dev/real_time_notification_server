@@ -103,9 +103,9 @@ app.get('/events/:userId', (request, reply) => {
 
   reply.raw.writeHead(200, {
     'Content-Type': 'text/event-stream',
-    'Cache-control': 'no-cache',
+    'cache-control': 'no-cache',
     connection: 'keep-alive',
-    'access-control-allow-origin': origin,
+    'Access-Control-Allow-Origin': origin,
   })
 
   if (!clients.has(userId)) {
