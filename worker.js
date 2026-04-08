@@ -32,11 +32,10 @@ export const consumerSQS = async () => {
 
                 const payload = JSON.parse(message.Body)
 
-                // Parce da mensagem do SNS
+                if (payload.Type === 'Notification') {
+                    // Parce da mensagem do SNS
 
-                const body = JSON.parse(payload.Message)
-
-                if (body.Type === 'Notification') {
+                    const body = JSON.parse(payload.Message)
 
                     console.log(
                       `[INSTANCE ${process.env.HOSTNAME}] Notification received:`,
