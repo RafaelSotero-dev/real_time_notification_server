@@ -29,7 +29,7 @@ const start = async () => {
   )
 }
 
-const clients = new Map()
+export const clients = new Map()
 
 console.log(origin)
 
