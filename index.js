@@ -97,6 +97,15 @@ const headBeat = (userId) => {
   }
 }
 
+app.options('/events/:userId', (_req, reply) => {
+  reply
+    .header('Access-Control-Allow-Origin', '*')
+    .header('Access-Control-Allow-Methods', 'GET, OPTIONS')
+    .header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+    .status(204)
+    .send()
+})
+
 app.get('/events/:userId', (request, reply) => {
   console.log(`[INSTANCE ${process.env.HOSTNAME}] client connected`)
   const { userId } = request.params
@@ -105,7 +114,9 @@ app.get('/events/:userId', (request, reply) => {
     'Content-Type': 'text/event-stream',
     'cache-control': 'no-cache',
     connection: 'keep-alive',
-    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Origin': '*', // importante
+    'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
   })
 
   if (!clients.has(userId)) {
