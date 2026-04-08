@@ -51,7 +51,6 @@ export const consumerSQS = async () => {
                         `data: ${JSON.stringify({ orderId, status, instance: process.env.HOSTNAME })}\n\n`,
                       )
                     })
-                    processedSuccessfully = true
                   }
                 
                 if (message.ReceiptHandle) {
