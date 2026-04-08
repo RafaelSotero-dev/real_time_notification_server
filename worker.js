@@ -34,7 +34,7 @@ export const consumerSQS = async () => {
 
                 // Parce da mensagem do SNS
 
-                const body = JSON.parse(payload)
+                const body = JSON.parse(payload.Message)
 
                 if (body.Type === 'Notification') {
 
