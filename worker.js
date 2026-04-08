@@ -1,18 +1,32 @@
-import { SQSClient, ReceiveMessageCommand, DeleteMessageCommand } from "@aws-sdk/client-sqs";
+import { SQSClient, ReceiveMessageCommand, DeleteMessageCommand, GetQueueUrlCommand } from "@aws-sdk/client-sqs";
 import { clients } from "./index.js";
+
+const endpoint = "http://sqs.us-east-1.localhost.localstack.cloud:4566";
 
 const sqsClient = new SQSClient({
     region: process.env.AWS_REGION || 'us-east-1',
-    endpoint: "http://sqs.us-east-1.localhost.localstack.cloud:4566",
+    endpoint,
     credentials: {
         accessKeyId: "test",
         secretAccessKey: "test"
     }
 })
 
-const queueUrl = process.env.SQS_QUEUE_URL
+const queueName = process.env.SQS_QUEUE_NAME
+
+const getQueueUrl = async () => {
+    const response = await sqsClient.send(
+        new GetQueueUrlCommand({
+            QueueName: queueName
+        })
+    )
+
+    return response.QueueUrl
+}
 
 export const consumerSQS = async () => {
+    const queueUrl = await getQueueUrl()
+
     while(true) {
         try {
             const response = await sqsClient.send(
