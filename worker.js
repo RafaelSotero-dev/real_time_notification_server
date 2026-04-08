@@ -3,6 +3,7 @@ import { clients } from "./index.js";
 
 const sqsClient = new SQSClient({
     region: process.env.AWS_REGION || 'us-east-1',
+    endpoint: "http://sqs.us-east-1.localhost.localstack.cloud:4566",
     credentials: {
         accessKeyId: "test",
         secretAccessKey: "test"
