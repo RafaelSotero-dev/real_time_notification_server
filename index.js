@@ -1,6 +1,7 @@
 import fastify from 'fastify'
 import cors from '@fastify/cors'
 import dotenv from 'dotenv'
+import { consumerSQS } from './worker.js'
 
 dotenv.config()
 
@@ -15,6 +16,8 @@ const start = async () => {
     origin: true,
     methods: ['GET', 'POST', 'OPTIONS'],
   })
+
+  await consumerSQS()
 
   await app.listen(
     {
