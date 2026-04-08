@@ -12,6 +12,7 @@
   "type": "module",
   "dependencies": {
     "@fastify/cors": "^11.2.0",
+    "dotenv": "^17.4.1",
     "fastify": "^5.8.4"
   }
 }
