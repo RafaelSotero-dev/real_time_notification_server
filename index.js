@@ -103,11 +103,13 @@ app.post('/webhook', async (req, reply) => {
 const headBeat = (userId) => {
   const connection = clients.get(userId)
   if (connection) {
-    setInterval(() => {
+    const heartbeatInterval = setInterval(() => {
       connection.forEach((res) => {
         res.write(`data: ${JSON.stringify('heartbeat')}\n\n`)
       })
     }, 30000)
+
+    return heartbeatInterval
   }
 }
 
@@ -130,7 +132,7 @@ app.get('/events/:userId', (request, reply) => {
 
   clients.get(userId).add(reply.raw)
 
-  headBeat(userId)
+  const heartbeatInterval = headBeat(userId)
 
   request.raw.on('close', () => {
     const connection = clients.get(userId)
@@ -138,9 +140,11 @@ app.get('/events/:userId', (request, reply) => {
       console.log(
         `[INSTANCE ${process.env.HOSTNAME}] client: ${userId} disconnected`,
       )
+      clearInterval(heartbeatInterval)
       connection.delete(reply.raw)
       if (connection.size === 0) {
         clients.delete(userId)
+        clearInterval(heartbeatInterval)
       }
     }
   })
