@@ -17,8 +17,6 @@ const start = async () => {
     methods: ['GET', 'POST', 'OPTIONS'],
   })
 
-  await consumerSQS()
-
   await app.listen(
     {
       port: PORT,
@@ -152,5 +150,7 @@ app.get('/events/:userId', (request, reply) => {
     }
   })
 })
+
+consumerSQS()
 
 start()
