@@ -35,7 +35,7 @@ const getQueueUrl = async () => {
     }),
   )
 
-  console.log(`Queue URL: ${queueUrl}`)
+  console.log(`Queue URL: ${response.QueueUrl}`)
 
   return response.QueueUrl
 }
