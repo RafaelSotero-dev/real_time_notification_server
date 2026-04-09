@@ -5,6 +5,9 @@ import {
   GetQueueUrlCommand,
 } from '@aws-sdk/client-sqs'
 import { clients } from './index.js'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const endpoint =
   process.env.ENDPOINT || 'http://sqs.us-east-1.localhost.localstack.cloud:4566'
