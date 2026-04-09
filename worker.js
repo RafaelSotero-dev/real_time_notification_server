@@ -21,23 +21,24 @@ const sqsClient = new SQSClient({
 const queueName = process.env.SQS_QUEUE_NAME
 
 const getQueueUrl = async () => {
+  console.log(`SQS Endpoint: ${endpoint}`)
+  console.log(`Queue Name: ${queueName}`)
+  console.log(`AWS Region: ${process.env.AWS_REGION}`)
+  console.log(`AWS Access Key ID: ${sqsClient.config}`)
+
   const response = await sqsClient.send(
     new GetQueueUrlCommand({
       QueueName: queueName,
     }),
   )
 
+  console.log(`Queue URL: ${queueUrl}`)
+
   return response.QueueUrl
 }
 
 export const consumerSQS = async () => {
   const queueUrl = await getQueueUrl()
-
-  console.log(`SQS Endpoint: ${endpoint}`)
-  console.log(`Queue Name: ${queueName}`)
-  console.log(`Queue URL: ${queueUrl}`)
-  console.log(`AWS Region: ${process.env.AWS_REGION}`)
-  console.log(`AWS Access Key ID: ${sqsClient.config}`)
 
   while (true) {
     try {
